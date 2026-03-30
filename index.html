@@ -1,1 +1,51 @@
+<div class="quest-log">
+    <h2>DAILY QUESTS</h2>
+    <div class="task-item">
+        <input type="checkbox" class="quest-check">
+        <span>MASTER: The Law of Torts (2 Hours)</span>
+    </div>
+    <div class="task-item">
+        <input type="checkbox" class="quest-check">
+        <span>DUNGEON: LNAT Logic Puzzle Level 1</span>
+    </div>
+    <div class="task-item">
+        <input type="checkbox" class="quest-check">
+        <span>BOSS BATTLE: Personal Statement Draft</span>
+    </div>
 
+    <div id="reward-sector" style="display: none; margin-top: 30px; border: 2px dashed var(--dragon-green); padding: 20px; text-align: center; background: rgba(0, 255, 136, 0.1);">
+        <h2 style="color: gold;">🏆 QUEST COMPLETE!</h2>
+        <p>The Dragon is pleased. Here is your loot:</p>
+        
+        <div style="background: #000; padding: 15px; border-radius: 5px; font-family: 'Press Start 2P'; font-size: 0.7rem;">
+            CODE: <span style="color: var(--neon-blue);">OXFORD_BOUND_2026</span>
+            <br><br>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" style="color: var(--dragon-green); text-decoration: none;">[ OPEN SECRET LINK ]</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.quest-check');
+    const rewardSector = document.getElementById('reward-sector');
+    const dragonSpeech = document.querySelector('.speech-bubble');
+
+    checkboxes.forEach(box => {
+        box.addEventListener('change', () => {
+            const allChecked = Array.from(checkboxes).every(c => c.checked);
+            
+            if (allChecked) {
+                rewardSector.style.display = 'block';
+                dragonSpeech.innerText = "AMAZING WORK! You've earned your reward for today. Don't let the flame go out tomorrow!";
+                dragonSpeech.style.boxShadow = "0 0 30px gold";
+                
+                // Optional: Scroll to reward
+                rewardSector.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                rewardSector.style.display = 'none';
+                dragonSpeech.innerText = "Keep going, Qasim! I still see unfinished business on that list...";
+                dragonSpeech.style.boxShadow = "0 0 15px var(--dragon-green)";
+            }
+        });
+    });
+</script>
