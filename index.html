@@ -1,51 +1,196 @@
-<div class="quest-log">
-    <h2>DAILY QUESTS</h2>
-    <div class="task-item">
-        <input type="checkbox" class="quest-check">
-        <span>MASTER: The Law of Torts (2 Hours)</span>
-    </div>
-    <div class="task-item"
-        <input type="checkbox" class="quest-check">
-        <span>DUNGEON: LNAT Logic Puzzle Level 1</span>
-    </div>
-    <div class="task-item">
-        <input type="checkbox" class="quest-check">
-        <span>BOSS BATTLE: Personal Statement Draft</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OXFORD QUEST: QASIM EDITION</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --dragon-green: #00ff88;
+            --bg-dark: #050505;
+        }
+
+        body {
+            background: var(--bg-dark);
+            background-image: radial-gradient(circle at center, #1a1a2e 0%, #050505 100%);
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- THE ANIMATED DRAGON --- */
+        .dragon-box {
+            text-align: center;
+            margin-top: 20px;
+            perspective: 1000px;
+        }
+
+        .dragon-sprite {
+            font-size: 100px;
+            display: inline-block;
+            filter: drop-shadow(0 0 15px var(--dragon-green));
+            animation: duo-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes duo-bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .speech-bubble {
+            background: white;
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 20px;
+            font-family: sans-serif;
+            font-weight: 800;
+            margin-top: 20px;
+            position: relative;
+            box-shadow: 0 0 20px var(--dragon-green);
+            max-width: 300px;
+        }
+
+        /* --- THE QUEST CARD --- */
+        .quest-card {
+            background: rgba(22, 27, 34, 0.9);
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 30px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.2);
+        }
+
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            color: var(--neon-blue);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .task {
+            background: #21262d;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .task:hover {
+            border-color: var(--dragon-green);
+            transform: scale(1.02);
+        }
+
+        input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            accent-color: var(--dragon-green);
+            margin-right: 15px;
+        }
+
+        /* --- STREAK & XP --- */
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #000;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid gold;
+            font-size: 12px;
+            color: gold;
+        }
+
+        /* --- HIDDEN REWARD --- */
+        #loot {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            animation: flash 1s infinite;
+        }
+
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stats">
+        <div class="stat-item">STREAK: 7🔥</div>
+        <div class="stat-item" style="border-color: var(--neon-blue); color: var(--neon-blue);">XP: 1450</div>
     </div>
 
-    <div id="reward-sector" style="display: none; margin-top: 30px; border: 2px dashed var(--dragon-green); padding: 20px; text-align: center; background: rgba(0, 255, 136, 0.1);">
-        <h2 style="color: gold;">🏆 QUEST COMPLETE!</h2>
-        <p>The Dragon is pleased. Here is your loot:</p>
-        
-        <div style="background: #000; padding: 15px; border-radius: 5px; font-family: 'Press Start 2P'; font-size: 0.7rem;">
-            CODE: <span style="color: var(--neon-blue);">OXFORD_BOUND_2026</span>
-            <br><br>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" style="color: var(--dragon-green); text-decoration: none;">[ OPEN SECRET LINK ]</a>
+    <div class="dragon-box">
+        <div class="dragon-sprite" id="dragon">🐲</div>
+        <div class="speech-bubble" id="bubble">
+            "Qasim! Oxford is for winners. Finish your quests or I'll burn your textbooks!"
         </div>
     </div>
-</div>
 
-<script>
-    const checkboxes = document.querySelectorAll('.quest-check');
-    const rewardSector = document.getElementById('reward-sector');
-    const dragonSpeech = document.querySelector('.speech-bubble');
+    <div class="quest-card">
+        <h2>ACTIVE MISSIONS</h2>
+        
+        <label class="task">
+            <input type="checkbox" class="step">
+            <span>⚔️ LNAT: Master Logic Drills</span>
+        </label>
 
-    checkboxes.forEach(box => {
-        box.addEventListener('change', () => {
-            const allChecked = Array.from(checkboxes).every(c => c.checked);
-            
-            if (allChecked) {
-                rewardSector.style.display = 'block';
-                dragonSpeech.innerText = "AMAZING WORK! You've earned your reward for today. Don't let the flame go out tomorrow!";
-                dragonSpeech.style.boxShadow = "0 0 30px gold";
+        <label class="task">
+            <input type="checkbox" class="step">
+            <span>📜 SCROLL: Read 'The Rule of Law'</span>
+        </label>
+
+        <label class="task">
+            <input type="checkbox" class="step">
+            <span>🛡️ BOSS: Personal Statement v1.0</span>
+        </label>
+
+        <div id="loot">
+            <h3 style="color: var(--dragon-green); font-family: 'Press Start 2P'; font-size: 10px;">LOOT UNLOCKED!</h3>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" style="color: white; font-size: 12px;">[ CLICK FOR REWARD ]</a>
+        </div>
+    </div>
+
+    <script>
+        const checks = document.querySelectorAll('.step');
+        const loot = document.getElementById('loot');
+        const bubble = document.getElementById('bubble');
+        const dragon = document.getElementById('dragon');
+
+        checks.forEach(box => {
+            box.addEventListener('change', () => {
+                const completed = Array.from(checks).filter(c => c.checked).length;
                 
-                // Optional: Scroll to reward
-                rewardSector.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                rewardSector.style.display = 'none';
-                dragonSpeech.innerText = "Keep going, Qasim! I still see unfinished business on that list...";
-                dragonSpeech.style.boxShadow = "0 0 15px var(--dragon-green)";
-            }
+                if (completed === 3) {
+                    loot.style.display = 'block';
+                    bubble.innerText = "LEGENDARY! You've conquered the day. Claim your loot, champion!";
+                    dragon.style.filter = "drop-shadow(0 0 30px gold)";
+                    dragon.innerText = "🦖"; // Evolves!
+                } else if (completed > 0) {
+                    bubble.innerText = "Good progress... but the quest isn't over yet!";
+                } else {
+                    bubble.innerText = "Oxford is for winners. Finish your quests or I'll burn your textbooks!";
+                }
+            });
         });
-    });
-</script>
+    </script>
+</body>
+</html>
